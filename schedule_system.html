@@ -237,18 +237,6 @@ function loadData() {
   alert("تم استعادة البيانات بنجاح.");
 }
 
-/* =========== 4) تصدير الجدول إلى PDF بجودة عالية =========== */
-function exportPDF() {
-  const element = document.getElementById("scheduleTable");
-  const opt = {
-    margin: 10,
-    filename: 'جدول-المواعيد.pdf',
-    image: { type: 'jpeg', quality: 1 },
-    html2canvas: { scale: 3 }, /* قللنا scale إلى 3 بدل 4 لتجنب التداخل */
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-  };
-  html2pdf().set(opt).from(element).save();
-}
 </script>
 </body>
 </html>
