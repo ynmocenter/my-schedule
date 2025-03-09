@@ -2,69 +2,97 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مواعيد المركز - جدولة مواعيد الأطفال</title>
+  <title>نظام مواعيد المركز - جدولة</title>
   <style>
+    /* استيراد خط عربي (مثال: Cairo) */
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+    :root {
+      /* لوّنات مقتبسة من الألوان الباستيل */
+      --color-navy: #1F2F3D;
+      --color-mint: #87C8BC;
+      --color-cream: #FFF9E6;
+      --color-peach: #F9D2A3;
+      --color-beige: #F5E6C8;
+      --color-bg:   #CDEDE6; /* درجة من الأخضر الباستيل */
+    }
+
     body {
       font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
       direction: rtl;
-      margin: 20px;
-      background-color: #f9f9f9;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: var(--color-bg);
     }
     header {
+      background-color: var(--color-navy);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      padding: 10px 20px;
     }
     header img {
-      height: 60px;
+      height: 50px;
     }
     header h1 {
       margin: 0;
       font-size: 24px;
     }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background-color: var(--color-cream);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
     form {
       margin-bottom: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
+      background-color: var(--color-beige);
+      padding: 15px;
       border-radius: 8px;
+      border: 1px solid #ccc;
     }
     form div {
       margin-bottom: 10px;
     }
     label {
       display: inline-block;
-      width: 150px;
+      width: 130px;
       font-weight: bold;
     }
     input, select {
       padding: 5px;
       width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     button {
       padding: 8px 16px;
       margin: 5px;
       cursor: pointer;
-      background-color: #007bff;
+      background-color: var(--color-mint);
       color: #fff;
       border: none;
       border-radius: 4px;
+      font-size: 14px;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #6ab3a7;
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .controls input {
+      margin: 0 5px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      background-color: #fff;
     }
     th, td {
       border: 1px solid #333;
@@ -72,20 +100,28 @@
       text-align: center;
     }
     th {
-      background-color: #eee;
+      background-color: var(--color-peach);
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .small-btn {
+      background-color: var(--color-peach);
+      color: #333;
+      font-size: 12px;
+      padding: 5px 10px;
     }
   </style>
-  <!-- استيراد خط "Cairo" من Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- رأس الصفحة مع شعار -->
+<header>
+  <img src="logo.png" alt="شعار المركز">
+  <h1>نظام مواعيد المركز - جدولة بسيطة</h1>
+</header>
+
 <div class="container">
-  <!-- قسم الشعار والعنوان -->
-  <header>
-    <img src="logo.png" alt="شعار المركز">
-    <h1>نظام مواعيد المركز - جدولة مواعيد الأطفال</h1>
-  </header>
-  
   <!-- نموذج إدخال بيانات الموعد -->
   <form id="appointmentForm">
     <div>
@@ -109,6 +145,7 @@
         <option value="1:00 - 1:40">1:00 - 1:40</option>
         <option value="1:40 - 2:20">1:40 - 2:20</option>
         <option value="2:20 - 3:00">2:20 - 3:00</option>
+        <option disabled>-- بريك 3:00 - 3:20 --</option>
         <option value="3:20 - 4:00">3:20 - 4:00</option>
         <option value="4:00 - 4:40">4:00 - 4:40</option>
         <option value="4:40 - 5:20">4:40 - 5:20</option>
@@ -126,6 +163,15 @@
         <option value="تعديل سلوك">تعديل سلوك</option>
         <option value="تخاطب">تخاطب</option>
         <option value="تنمية مهارات">تنمية مهارات</option>
+        <option value="جلسة نفسية">جلسة نفسية</option>
+        <option value="اختبار ذكاء">اختبار ذكاء</option>
+      </select>
+    </div>
+    <div>
+      <label for="appointmentType">نوع الموعد:</label>
+      <select id="appointmentType" required>
+        <option value="عادي">عادي</option>
+        <option value="تعويض">تعويض</option>
       </select>
     </div>
     <div>
@@ -137,6 +183,8 @@
       <select id="subscription" required>
         <option value="24 جلسة">24 جلسة</option>
         <option value="36 جلسة">36 جلسة</option>
+        <option value="ساعة اختبار">ساعة اختبار</option>
+        <option value="ساعتين اختبار">ساعتين اختبار</option>
       </select>
     </div>
     <div>
@@ -148,25 +196,32 @@
       <button type="button" onclick="clearForm()">مسح الحقول</button>
     </div>
   </form>
-  
+
   <!-- أدوات التصفية -->
-  <div>
+  <div class="controls">
     <label for="filterSpec">تصفية حسب الأخصائي:</label>
     <input type="text" id="filterSpec">
     <button onclick="filterAppointments()">تصفية</button>
     <button onclick="showAllAppointments()">عرض الجميع</button>
   </div>
-  
+
+  <!-- أدوات الحفظ والاستعادة -->
+  <div class="controls">
+    <button class="small-btn" onclick="saveAppointments()">حفظ المواعيد</button>
+    <button class="small-btn" onclick="loadAppointments()">استعادة المواعيد</button>
+  </div>
+
   <!-- جدول عرض المواعيد -->
-  <table id="appointmentsTable">
+  <table>
     <thead>
       <tr>
         <th>اسم الطفل</th>
         <th>اليوم</th>
         <th>الوقت</th>
         <th>القسم</th>
-        <th>نوع الاشتراك</th>
+        <th>نوع الموعد</th>
         <th>اسم الأخصائي</th>
+        <th>نوع الاشتراك</th>
         <th>ملاحظات</th>
       </tr>
     </thead>
@@ -177,76 +232,86 @@
 </div>
 
 <script>
-// مصفوفة لتخزين المواعيد
+/* مصفوفة لتخزين المواعيد */
 let appointments = [];
+const MAX_PER_SLOT = 5; // لا يتجاوز 5 أطفال في نفس اليوم والفترة
 
-// إضافة موعد جديد عند تقديم النموذج
+// عند تقديم النموذج: إضافة موعد جديد
 document.getElementById('appointmentForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const childName = document.getElementById('childName').value;
+  const childName = document.getElementById('childName').value.trim();
   const day = document.getElementById('day').value;
   const timeSlot = document.getElementById('timeSlot').value;
   const department = document.getElementById('department').value;
-  const specialist = document.getElementById('specialist').value;
+  const appointmentType = document.getElementById('appointmentType').value;
+  const specialist = document.getElementById('specialist').value.trim();
   const subscription = document.getElementById('subscription').value;
-  const notes = document.getElementById('notes').value;
-  
+  const notes = document.getElementById('notes').value.trim();
+
+  // تحقق من عدد الأطفال في نفس (اليوم + الوقت)
+  if(isSlotFull(day, timeSlot)) {
+    alert("عفواً، هذا الموعد ( " + day + " - " + timeSlot + " ) ممتلئ بخمسة أطفال.");
+    return;
+  }
+
   const appointment = {
     childName,
     day,
     timeSlot,
     department,
+    appointmentType,
     specialist,
     subscription,
     notes
   };
-  
+
   appointments.push(appointment);
   displayAppointments();
   this.reset();
 });
 
 // عرض المواعيد في الجدول
-function displayAppointments() {
+function displayAppointments(filteredList = null) {
+  const list = filteredList || appointments;
   const tbody = document.getElementById('appointmentsBody');
   tbody.innerHTML = "";
-  appointments.forEach((appt, index) => {
+  list.forEach(appt => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${appt.childName}</td>
       <td>${appt.day}</td>
       <td>${appt.timeSlot}</td>
       <td>${appt.department}</td>
-      <td>${appt.subscription}</td>
+      <td>${appt.appointmentType}</td>
       <td>${appt.specialist}</td>
+      <td>${appt.subscription}</td>
       <td>${appt.notes}</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-// تصفية المواعيد حسب اسم الأخصائي
+// دالة لمعرفة إن كان اليوم + الفترة ممتلئًا (5 أطفال)
+function isSlotFull(day, timeSlot) {
+  let count = 0;
+  for (let appt of appointments) {
+    if(appt.day === day && appt.timeSlot === timeSlot) {
+      count++;
+    }
+  }
+  return (count >= MAX_PER_SLOT);
+}
+
+// تصفية المواعيد حسب الأخصائي
 function filterAppointments() {
   const filterSpec = document.getElementById('filterSpec').value.trim().toLowerCase();
-  const tbody = document.getElementById('appointmentsBody');
-  tbody.innerHTML = "";
-  appointments.filter(appt => appt.specialist.toLowerCase() === filterSpec)
-              .forEach(appt => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${appt.childName}</td>
-      <td>${appt.day}</td>
-      <td>${appt.timeSlot}</td>
-      <td>${appt.department}</td>
-      <td>${appt.subscription}</td>
-      <td>${appt.specialist}</td>
-      <td>${appt.notes}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  const filtered = appointments.filter(appt => 
+    appt.specialist.toLowerCase() === filterSpec
+  );
+  displayAppointments(filtered);
 }
 
-// عرض كل المواعيد
+// عرض جميع المواعيد
 function showAllAppointments() {
   displayAppointments();
 }
