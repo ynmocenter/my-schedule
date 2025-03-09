@@ -2,15 +2,21 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مواعيد المركز</title>
+  <title>نظام مواعيد المركز - جدولة مواعيد الأطفال</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-
     body {
       font-family: 'Cairo', sans-serif;
-      margin: 20px;
       direction: rtl;
-      background-color: #f9f9f9; /* خلفية خفيفة */
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     header {
       display: flex;
@@ -19,28 +25,32 @@
       margin-bottom: 20px;
     }
     header img {
-      height: 60px; /* تحكم في ارتفاع الشعار */
+      height: 60px;
     }
     header h1 {
       margin: 0;
       font-size: 24px;
     }
-    .container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .controls {
-      text-align: center;
+    form {
       margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
     }
-    .controls input {
-      padding: 6px;
-      margin: 5px;
+    form div {
+      margin-bottom: 10px;
     }
-    .controls button {
-      padding: 7px 14px;
+    label {
+      display: inline-block;
+      width: 150px;
+      font-weight: bold;
+    }
+    input, select {
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      padding: 8px 16px;
       margin: 5px;
       cursor: pointer;
       background-color: #007bff;
@@ -48,189 +58,220 @@
       border: none;
       border-radius: 4px;
     }
-    .controls button:hover {
+    button:hover {
       background-color: #0056b3;
     }
     table {
-      border-collapse: collapse;
       width: 100%;
-      margin-bottom: 30px;
-      font-size: 14px;
-      background-color: #fff;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
     th, td {
       border: 1px solid #333;
-      padding: 10px;
+      padding: 8px;
       text-align: center;
-      vertical-align: middle;
     }
     th {
       background-color: #eee;
     }
-    td[contenteditable="true"] {
-      background-color: #fafafa;
-    }
-    .breakRow td {
-      background-color: #fffbcc;
-    }
-    .hiddenRow {
-      display: none !important;
-    }
   </style>
+  <!-- استيراد خط "Cairo" من Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<!-- قسم العنوان والشعار -->
-<header>
-  <!-- شعار المركز -->
-  <img src="logo.png" alt="شعار المركز" />
-  <!-- يمكنك تعديل النص أدناه لاسم المركز أو عنوان الصفحة -->
-  <h1>نظام مواعيد المركز - أسبوعي</h1>
-</header>
-
 <div class="container">
-  <div class="controls">
-    <label>اسم الأخصائي للتصفية:</label>
-    <input type="text" id="filterSpecialist" placeholder="مثال: أحمد">
-    <button onclick="filterBySpecialist()">تصفية</button>
-    <button onclick="showAll()">عرض الجميع</button>
-    <br>
-    <button onclick="saveData()">حفظ البيانات</button>
-    <button onclick="loadData()">استعادة البيانات</button>
+  <!-- قسم الشعار والعنوان -->
+  <header>
+    <img src="logo.png" alt="شعار المركز">
+    <h1>نظام مواعيد المركز - جدولة مواعيد الأطفال</h1>
+  </header>
+  
+  <!-- نموذج إدخال بيانات الموعد -->
+  <form id="appointmentForm">
+    <div>
+      <label for="childName">اسم الطفل:</label>
+      <input type="text" id="childName" required>
+    </div>
+    <div>
+      <label for="day">اليوم:</label>
+      <select id="day" required>
+        <option value="السبت">السبت</option>
+        <option value="الأحد">الأحد</option>
+        <option value="الاثنين">الاثنين</option>
+        <option value="الثلاثاء">الثلاثاء</option>
+        <option value="الأربعاء">الأربعاء</option>
+        <option value="الخميس">الخميس</option>
+      </select>
+    </div>
+    <div>
+      <label for="timeSlot">الوقت:</label>
+      <select id="timeSlot" required>
+        <option value="1:00 - 1:40">1:00 - 1:40</option>
+        <option value="1:40 - 2:20">1:40 - 2:20</option>
+        <option value="2:20 - 3:00">2:20 - 3:00</option>
+        <option value="3:20 - 4:00">3:20 - 4:00</option>
+        <option value="4:00 - 4:40">4:00 - 4:40</option>
+        <option value="4:40 - 5:20">4:40 - 5:20</option>
+        <option value="5:20 - 6:00">5:20 - 6:00</option>
+        <option value="6:00 - 6:40">6:00 - 6:40</option>
+        <option value="6:40 - 7:20">6:40 - 7:20</option>
+        <option value="7:20 - 8:00">7:20 - 8:00</option>
+        <option value="8:00 - 8:40">8:00 - 8:40</option>
+        <option value="8:40 - 9:20">8:40 - 9:20</option>
+      </select>
+    </div>
+    <div>
+      <label for="department">القسم:</label>
+      <select id="department" required>
+        <option value="تعديل سلوك">تعديل سلوك</option>
+        <option value="تخاطب">تخاطب</option>
+        <option value="تنمية مهارات">تنمية مهارات</option>
+      </select>
+    </div>
+    <div>
+      <label for="specialist">اسم الأخصائي:</label>
+      <input type="text" id="specialist" required>
+    </div>
+    <div>
+      <label for="subscription">نوع الاشتراك:</label>
+      <select id="subscription" required>
+        <option value="24 جلسة">24 جلسة</option>
+        <option value="36 جلسة">36 جلسة</option>
+      </select>
+    </div>
+    <div>
+      <label for="notes">ملاحظات:</label>
+      <input type="text" id="notes">
+    </div>
+    <div>
+      <button type="submit">إضافة الموعد</button>
+      <button type="button" onclick="clearForm()">مسح الحقول</button>
+    </div>
+  </form>
+  
+  <!-- أدوات التصفية -->
+  <div>
+    <label for="filterSpec">تصفية حسب الأخصائي:</label>
+    <input type="text" id="filterSpec">
+    <button onclick="filterAppointments()">تصفية</button>
+    <button onclick="showAllAppointments()">عرض الجميع</button>
   </div>
-
-  <table id="scheduleTable">
+  
+  <!-- جدول عرض المواعيد -->
+  <table id="appointmentsTable">
     <thead>
       <tr>
+        <th>اسم الطفل</th>
         <th>اليوم</th>
         <th>الوقت</th>
-        <th>اسم الأخصائي</th>
-        <th>اسم الطفل</th>
         <th>القسم</th>
         <th>نوع الاشتراك</th>
+        <th>اسم الأخصائي</th>
         <th>ملاحظات</th>
       </tr>
     </thead>
-    <tbody id="scheduleBody">
-      <!-- سيتم توليد الصفوف عبر JavaScript -->
+    <tbody id="appointmentsBody">
+      <!-- سيتم إضافة المواعيد هنا -->
     </tbody>
   </table>
 </div>
 
 <script>
-/* =========== 1) توليد جدول أسبوعي من السبت إلى الخميس =========== */
-const days = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
-const timeSlots = [
-  "1:00 - 1:40",
-  "1:40 - 2:20",
-  "2:20 - 3:00",
-  "3:00 - 3:20 (بريك)",
-  "3:20 - 4:00",
-  "4:00 - 4:40",
-  "4:40 - 5:20",
-  "5:20 - 6:00",
-  "6:00 - 6:40",
-  "6:40 - 7:20",
-  "7:20 - 8:00",
-  "8:00 - 8:40",
-  "8:40 - 9:20"
-];
+// مصفوفة لتخزين المواعيد
+let appointments = [];
 
-const scheduleBody = document.getElementById("scheduleBody");
-
-// إنشاء الصفوف: لكل يوم ولكل فترة زمنية
-days.forEach(day => {
-  timeSlots.forEach(slot => {
-    const row = document.createElement("tr");
-
-    // عمود اليوم (غير قابل للتحرير)
-    const dayCell = document.createElement("td");
-    dayCell.textContent = day;
-    row.appendChild(dayCell);
-
-    // عمود الوقت (قابل للتحرير)
-    const timeCell = document.createElement("td");
-    timeCell.textContent = slot;
-    timeCell.setAttribute("contenteditable", "true");
-    row.appendChild(timeCell);
-
-    // 5 خلايا قابلة للتحرير: (اسم الأخصائي، اسم الطفل، القسم، نوع الاشتراك، الملاحظات)
-    for (let i = 0; i < 5; i++) {
-      const cell = document.createElement("td");
-      cell.setAttribute("contenteditable", "true");
-      row.appendChild(cell);
-    }
-
-    // تمييز صف البريك
-    if (slot.includes("بريك")) {
-      row.classList.add("breakRow");
-    }
-
-    scheduleBody.appendChild(row);
-  });
+// إضافة موعد جديد عند تقديم النموذج
+document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const childName = document.getElementById('childName').value;
+  const day = document.getElementById('day').value;
+  const timeSlot = document.getElementById('timeSlot').value;
+  const department = document.getElementById('department').value;
+  const specialist = document.getElementById('specialist').value;
+  const subscription = document.getElementById('subscription').value;
+  const notes = document.getElementById('notes').value;
+  
+  const appointment = {
+    childName,
+    day,
+    timeSlot,
+    department,
+    specialist,
+    subscription,
+    notes
+  };
+  
+  appointments.push(appointment);
+  displayAppointments();
+  this.reset();
 });
 
-/* =========== 2) دوال التصفية =========== */
-function filterBySpecialist() {
-  const specName = document.getElementById("filterSpecialist").value.trim();
-  if (!specName) {
-    alert("يرجى إدخال اسم الأخصائي للتصفية.");
-    return;
-  }
-  const rows = scheduleBody.getElementsByTagName("tr");
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    const specialist = cells[2].innerText.trim();
-    if (specialist && specialist === specName) {
-      rows[i].classList.remove("hiddenRow");
-    } else {
-      rows[i].classList.add("hiddenRow");
-    }
-  }
+// عرض المواعيد في الجدول
+function displayAppointments() {
+  const tbody = document.getElementById('appointmentsBody');
+  tbody.innerHTML = "";
+  appointments.forEach((appt, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${appt.childName}</td>
+      <td>${appt.day}</td>
+      <td>${appt.timeSlot}</td>
+      <td>${appt.department}</td>
+      <td>${appt.subscription}</td>
+      <td>${appt.specialist}</td>
+      <td>${appt.notes}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-function showAll() {
-  const rows = scheduleBody.getElementsByTagName("tr");
-  for (let i = 0; i < rows.length; i++) {
-    rows[i].classList.remove("hiddenRow");
-  }
+// تصفية المواعيد حسب اسم الأخصائي
+function filterAppointments() {
+  const filterSpec = document.getElementById('filterSpec').value.trim().toLowerCase();
+  const tbody = document.getElementById('appointmentsBody');
+  tbody.innerHTML = "";
+  appointments.filter(appt => appt.specialist.toLowerCase() === filterSpec)
+              .forEach(appt => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${appt.childName}</td>
+      <td>${appt.day}</td>
+      <td>${appt.timeSlot}</td>
+      <td>${appt.department}</td>
+      <td>${appt.subscription}</td>
+      <td>${appt.specialist}</td>
+      <td>${appt.notes}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-/* =========== 3) حفظ واستعادة البيانات (LocalStorage) =========== */
-function saveData() {
-  const rows = scheduleBody.getElementsByTagName("tr");
-  let data = [];
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    let rowData = [];
-    for (let j = 0; j < cells.length; j++) {
-      rowData.push(cells[j].innerText);
-    }
-    data.push(rowData);
-  }
-  localStorage.setItem("scheduleData", JSON.stringify(data));
-  alert("تم حفظ البيانات بنجاح في المتصفح.");
+// عرض كل المواعيد
+function showAllAppointments() {
+  displayAppointments();
 }
 
-function loadData() {
-  const stored = localStorage.getItem("scheduleData");
-  if (!stored) {
-    alert("لا توجد بيانات محفوظة.");
-    return;
+// مسح الحقول في النموذج
+function clearForm() {
+  document.getElementById('appointmentForm').reset();
+}
+
+// حفظ المواعيد في LocalStorage
+function saveAppointments() {
+  localStorage.setItem('appointments', JSON.stringify(appointments));
+  alert("تم حفظ المواعيد في المتصفح.");
+}
+
+// استعادة المواعيد من LocalStorage
+function loadAppointments() {
+  const stored = localStorage.getItem('appointments');
+  if(stored) {
+    appointments = JSON.parse(stored);
+    displayAppointments();
+    alert("تم استعادة المواعيد.");
+  } else {
+    alert("لا توجد مواعيد محفوظة.");
   }
-  const data = JSON.parse(stored);
-  const rows = scheduleBody.getElementsByTagName("tr");
-  if (data.length !== rows.length) {
-    alert("حجم البيانات المحفوظة لا يطابق الجدول الحالي!");
-    return;
-  }
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    for (let j = 0; j < cells.length; j++) {
-      cells[j].innerText = data[i][j];
-    }
-  }
-  alert("تم استعادة البيانات بنجاح.");
 }
 </script>
 </body>
