@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مواعيد المركز - جدولة</title>
+  <title>نظام مواعيد المركز</title>
   <style>
     /* استيراد خط عربي (مثال: Cairo) */
     @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
@@ -24,21 +24,24 @@
       direction: rtl;
       background-color: var(--color-bg);
     }
+
+    /* ====== تعديل الشريط العلوي (Header) ====== */
     header {
       background-color: var(--color-navy);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 20px;
+      padding: 20px; /* تكبير المساحة العلوية والسفلية */
     }
     header img {
-      height: 50px;
+      height: 70px; /* تكبير الشعار */
     }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 28px; /* تكبير الخط */
     }
+
     .container {
       max-width: 1200px;
       margin: 20px auto;
@@ -118,7 +121,8 @@
 <!-- رأس الصفحة مع شعار -->
 <header>
   <img src="logo.png" alt="شعار المركز">
-  <h1>نظام مواعيد المركز - جدولة بسيطة</h1>
+  <!-- تم تعديل العنوان هنا -->
+  <h1>نظام مواعيد المركز</h1>
 </header>
 
 <div class="container">
