@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام مواعيد المركز</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif; /* مثال على خط عربي من Google Fonts */
+      margin: 20px;
+      direction: rtl;
+      background-color: #f9f9f9; /* خلفية خفيفة */
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    header img {
+      height: 60px; /* تحكم في ارتفاع الشعار */
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .controls input {
+      padding: 6px;
+      margin: 5px;
+    }
+    .controls button {
+      padding: 7px 14px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+    .controls button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 30px;
+      font-size: 14px;
+      background-color: #fff;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #eee;
+    }
+    td[contenteditable="true"] {
+      background-color: #fafafa;
+    }
+    .breakRow td {
+      background-color: #fffbcc;
+    }
+    .hiddenRow {
+      display: none !important;
+    }
+    /* استيراد خط عربي (Cairo) من Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+  </style>
+</head>
+<body>
+
+<!-- قسم العنوان والشعار -->
+<header>
+  <!-- شعار المركز -->
+  <img src="logo.png" alt="شعار المركز" />
+  <!-- يمكنك تعديل النص أدناه لاسم المركز أو عنوان الصفحة -->
+  <h1>نظام مواعيد المركز - أسبوعي</h1>
+</header>
+
+<div class="container">
+  <div class="controls">
+    <label>اسم الأخصائي للتصفية:</label>
+    <input type="text" id="filterSpecialist" placeholder="مثال: أحمد">
+    <button onclick="filterBySpecialist()">تصفية</button>
+    <button onclick="showAll()">عرض الجميع</button>
+    <br>
+    <button onclick="saveData()">حفظ البيانات</button>
+    <button onclick="loadData()">استعادة البيانات</button>
+    <button onclick="exportPDF()">تصدير إلى PDF</button>
+  </div>
+
+  <table id="scheduleTable">
+    <thead>
+      <tr>
+        <th>اليوم</th>
+        <th>الوقت</th>
+        <th>اسم الأخصائي</th>
+        <th>اسم الطفل</th>
+        <th>القسم</th>
+        <th>نوع الاشتراك</th>
+        <th>ملاحظات</th>
+      </tr>
+    </thead>
+    <tbody id="scheduleBody">
+      <!-- سيتم توليد الصفوف عبر JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+<!-- تحميل مكتبة html2pdf.js من cdnjs (يفضل تشغيل الصفحة عبر خادم ويب) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+<script>
+/* =========== 1) توليد جدول أسبوعي من السبت إلى الخميس =========== */
+const days = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+const timeSlots = [
+  "1:00 - 1:40",
+  "1:40 - 2:20",
+  "2:20 - 3:00",
+  "3:00 - 3:20 (بريك)",
+  "3:20 - 4:00",
+  "4:00 - 4:40",
+  "4:40 - 5:20",
+  "5:20 - 6:00",
+  "6:00 - 6:40",
+  "6:40 - 7:20",
+  "7:20 - 8:00",
+  "8:00 - 8:40",
+  "8:40 - 9:20"
+];
+
+const scheduleBody = document.getElementById("scheduleBody");
+
+// إنشاء الصفوف: لكل يوم ولكل فترة زمنية
+days.forEach(day => {
+  timeSlots.forEach(slot => {
+    const row = document.createElement("tr");
+
+    // عمود اليوم (غير قابل للتحرير)
+    const dayCell = document.createElement("td");
+    dayCell.textContent = day;
+    row.appendChild(dayCell);
+
+    // عمود الوقت (قابل للتحرير)
+    const timeCell = document.createElement("td");
+    timeCell.textContent = slot;
+    timeCell.setAttribute("contenteditable", "true");
+    row.appendChild(timeCell);
+
+    // 5 خلايا قابلة للتحرير
+    for (let i = 0; i < 5; i++) {
+      const cell = document.createElement("td");
+      cell.setAttribute("contenteditable", "true");
+      row.appendChild(cell);
+    }
+
+    // تمييز صف البريك
+    if (slot.includes("بريك")) {
+      row.classList.add("breakRow");
+    }
+
+    scheduleBody.appendChild(row);
+  });
+});
+
+/* =========== 2) دوال التصفية =========== */
+function filterBySpecialist() {
+  const specName = document.getElementById("filterSpecialist").value.trim();
+  if (!specName) {
+    alert("يرجى إدخال اسم الأخصائي للتصفية.");
+    return;
+  }
+  const rows = scheduleBody.getElementsByTagName("tr");
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    const specialist = cells[2].innerText.trim();
+    if (specialist && specialist === specName) {
+      rows[i].classList.remove("hiddenRow");
+    } else {
+      rows[i].classList.add("hiddenRow");
+    }
+  }
+}
+
+function showAll() {
+  const rows = scheduleBody.getElementsByTagName("tr");
+  for (let i = 0; i < rows.length; i++) {
+    rows[i].classList.remove("hiddenRow");
+  }
+}
+
+/* =========== 3) حفظ واستعادة البيانات (LocalStorage) =========== */
+function saveData() {
+  const rows = scheduleBody.getElementsByTagName("tr");
+  let data = [];
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    let rowData = [];
+    for (let j = 0; j < cells.length; j++) {
+      rowData.push(cells[j].innerText);
+    }
+    data.push(rowData);
+  }
+  localStorage.setItem("scheduleData", JSON.stringify(data));
+  alert("تم حفظ البيانات بنجاح في المتصفح.");
+}
+
+function loadData() {
+  const stored = localStorage.getItem("scheduleData");
+  if (!stored) {
+    alert("لا توجد بيانات محفوظة.");
+    return;
+  }
+  const data = JSON.parse(stored);
+  const rows = scheduleBody.getElementsByTagName("tr");
+  if (data.length !== rows.length) {
+    alert("حجم البيانات المحفوظة لا يطابق الجدول الحالي!");
+    return;
+  }
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    for (let j = 0; j < cells.length; j++) {
+      cells[j].innerText = data[i][j];
+    }
+  }
+  alert("تم استعادة البيانات بنجاح.");
+}
+
+/* =========== 4) تصدير الجدول إلى PDF بجودة عالية =========== */
+function exportPDF() {
+  const element = document.getElementById("scheduleTable");
+  const opt = {
+    margin: 10,
+    filename: 'جدول-المواعيد.pdf',
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 3 }, /* قللنا scale إلى 3 بدل 4 لتجنب التداخل */
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+  };
+  html2pdf().set(opt).from(element).save();
+}
+</script>
+</body>
+</html>
