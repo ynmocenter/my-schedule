@@ -18,8 +18,7 @@
     }
     body {
       font-family: 'Cairo', sans-serif;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       direction: rtl;
       background-color: var(--color-bg);
     }
@@ -29,14 +28,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px; /* شريط علوي أكبر */
+      padding: 20px;
     }
-    header img {
-      height: 70px; /* تكبير الشعار */
-    }
+    header img { height: 70px; }
     header h1 {
       margin: 0;
-      font-size: 28px; /* تعديل جملة العنوان */
+      font-size: 28px;
     }
     .container {
       max-width: 1200px;
@@ -53,9 +50,7 @@
       border-radius: 8px;
       border: 1px solid #ccc;
     }
-    form div {
-      margin-bottom: 10px;
-    }
+    form div { margin-bottom: 10px; }
     label {
       display: inline-block;
       width: 130px;
@@ -67,10 +62,7 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    /* تنسيق مربعات الاختيار للأقسام */
-    .dept-checkbox {
-      margin-right: 10px;
-    }
+    .dept-checkbox { margin-right: 10px; }
     button {
       padding: 8px 16px;
       margin: 5px;
@@ -81,16 +73,12 @@
       border-radius: 4px;
       font-size: 14px;
     }
-    button:hover {
-      background-color: #6ab3a7;
-    }
+    button:hover { background-color: #6ab3a7; }
     .controls {
       text-align: center;
       margin-bottom: 20px;
     }
-    .controls input {
-      margin: 0 5px;
-    }
+    .controls input { margin: 0 5px; }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -102,12 +90,8 @@
       padding: 8px;
       text-align: center;
     }
-    th {
-      background-color: var(--color-peach);
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
+    th { background-color: var(--color-peach); }
+    tr:nth-child(even) { background-color: #f9f9f9; }
     .action-btn {
       background-color: var(--color-peach);
       color: #333;
@@ -120,13 +104,11 @@
 </head>
 <body>
 <div class="container">
-  <!-- رأس الصفحة مع شعار -->
   <header>
     <img src="logo.png" alt="شعار المركز">
     <h1>نظام مواعيد المركز</h1>
   </header>
 
-  <!-- نموذج إدخال بيانات الموعد -->
   <form id="appointmentForm">
     <div>
       <label for="childName">اسم الطفل:</label>
@@ -163,17 +145,11 @@
     </div>
     <div>
       <label>الأقسام المطلوبة:</label>
-      <!-- مربعات اختيار للأقسام -->
-      <input type="checkbox" class="dept-checkbox" id="dept1" value="تعديل سلوك">
-      <label for="dept1">تعديل سلوك</label>
-      <input type="checkbox" class="dept-checkbox" id="dept2" value="تخاطب">
-      <label for="dept2">تخاطب</label>
-      <input type="checkbox" class="dept-checkbox" id="dept3" value="تنمية مهارات">
-      <label for="dept3">تنمية مهارات</label>
-      <input type="checkbox" class="dept-checkbox" id="dept4" value="جلسة نفسية">
-      <label for="dept4">جلسة نفسية</label>
-      <input type="checkbox" class="dept-checkbox" id="dept5" value="اختبار ذكاء">
-      <label for="dept5">اختبار ذكاء</label>
+      <input type="checkbox" class="dept-checkbox" id="dept1" value="تعديل سلوك"><label for="dept1">تعديل سلوك</label>
+      <input type="checkbox" class="dept-checkbox" id="dept2" value="تخاطب"><label for="dept2">تخاطب</label>
+      <input type="checkbox" class="dept-checkbox" id="dept3" value="تنمية مهارات"><label for="dept3">تنمية مهارات</label>
+      <input type="checkbox" class="dept-checkbox" id="dept4" value="جلسة نفسية"><label for="dept4">جلسة نفسية</label>
+      <input type="checkbox" class="dept-checkbox" id="dept5" value="اختبار ذكاء"><label for="dept5">اختبار ذكاء</label>
     </div>
     <div>
       <label for="appointmentType">نوع الموعد:</label>
@@ -183,15 +159,11 @@
       </select>
     </div>
     <div>
-      <label for="specialist">اسم الأخصائي:</label>
-      <!-- هنا يُمكنك تركه فارغاً لأن التوزيع سيكون تلقائياً -->
-      <input type="text" id="specialist" placeholder="تُعبأ تلقائياً" readonly>
-    </div>
-    <div>
       <label for="subscription">نوع الاشتراك:</label>
       <select id="subscription" required>
         <option value="24 جلسة">24 جلسة</option>
         <option value="36 جلسة">36 جلسة</option>
+        <option value="48 جلسة">48 جلسة</option>
         <option value="ساعة اختبار">ساعة اختبار</option>
         <option value="ساعتين اختبار">ساعتين اختبار</option>
       </select>
@@ -206,21 +178,17 @@
     </div>
   </form>
 
-  <!-- أدوات التصفية -->
   <div class="controls">
     <label for="filterSpec">تصفية حسب الأخصائي:</label>
     <input type="text" id="filterSpec">
     <button onclick="filterAppointments()">تصفية</button>
     <button onclick="showAllAppointments()">عرض الجميع</button>
   </div>
-
-  <!-- أدوات الحفظ والاستعادة -->
   <div class="controls">
-    <button class="small-btn" onclick="saveAppointments()">حفظ المواعيد</button>
-    <button class="small-btn" onclick="loadAppointments()">استعادة المواعيد</button>
+    <button class="action-btn" onclick="saveAppointments()">حفظ المواعيد</button>
+    <button class="action-btn" onclick="loadAppointments()">استعادة المواعيد</button>
   </div>
 
-  <!-- جدول عرض المواعيد -->
   <table>
     <thead>
       <tr>
@@ -229,101 +197,67 @@
         <th>الوقت</th>
         <th>القسم</th>
         <th>نوع الموعد</th>
-        <th>اسم الأخصائي</th>
+        <th>الأخصائي</th>
         <th>نوع الاشتراك</th>
         <th>ملاحظات</th>
-        <th>الإجراء</th>
+        <th>إجراء</th>
       </tr>
     </thead>
-    <tbody id="appointmentsBody">
-      <!-- سيتم إضافة المواعيد هنا -->
-    </tbody>
+    <tbody id="appointmentsBody"></tbody>
   </table>
 </div>
 
 <script>
-/* ======================= إعدادات النظام ======================= */
-/* قائمة المختصين المُتاحة لكل قسم */
+/* قائمة المختصين لكل قسم */
 const specialistList = {
-  "تعديل سلوك": ["أحمد", "محمد"],
-  "تخاطب": ["سامي", "علي"],
-  "تنمية مهارات": ["خالد", "فاطمة"],
-  "جلسة نفسية": ["نور", "مريم"],
-  "اختبار ذكاء": ["عمرو", "سيف"]
+  "تعديل سلوك": ["أحمد","محمد"],
+  "تخاطب": ["سامي","علي"],
+  "تنمية مهارات": ["خالد","فاطمة"],
+  "جلسة نفسية": ["نور","مريم"],
+  "اختبار ذكاء": ["عمرو","سيف"]
 };
 
-/* لتوزيع التعيين: سنختار أول متخصص متاح لكل قسم */
-function assignSpecialist(dept, day, timeSlot) {
-  // للحصول على التعيين البسيط: نختار أول اسم من القائمة
-  const list = specialistList[dept] || [];
-  // يمكننا إضافة شرط للتأكد من عدم تعارض التعيين في نفس اليوم والفترة إذا احتجت لذلك
-  return list.length ? list[0] : "";
+function assignSpecialist(dept) {
+  const list = specialistList[dept]||[];
+  return list.length? list[0] : "";
 }
 
-/* ======================= نظام المواعيد ======================= */
 let appointments = [];
-const MAX_PER_SLOT = 5; // لا يتجاوز 5 أطفال في نفس (اليوم + الوقت)
+const MAX_PER_SLOT = 5;
 
-/* عند تقديم النموذج: إضافة موعد جديد */
-document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+document.getElementById('appointmentForm').addEventListener('submit', function(e){
   e.preventDefault();
   const childName = document.getElementById('childName').value.trim();
   const day = document.getElementById('day').value;
   const timeSlot = document.getElementById('timeSlot').value;
-  const subscription = document.getElementById('subscription').value;
   const appointmentType = document.getElementById('appointmentType').value;
+  const subscription = document.getElementById('subscription').value;
   const notes = document.getElementById('notes').value.trim();
 
-  // جمع الأقسام المطلوبة من مربعات الاختيار
-  const deptCheckboxes = document.querySelectorAll('.dept-checkbox');
-  let requiredDepts = [];
-  deptCheckboxes.forEach(checkbox => {
-    if(checkbox.checked) requiredDepts.push(checkbox.value);
+  const depts = Array.from(document.querySelectorAll('.dept-checkbox'))
+    .filter(cb=>cb.checked).map(cb=>cb.value);
+  if(depts.length===0){ alert("اختر قسمًا واحدًا على الأقل."); return; }
+  if(isSlotFull(day,timeSlot)){ alert(`المدة (${day} ${timeSlot}) ممتلئة بخمسة أطفال.`); return; }
+
+  depts.forEach(dept=>{
+    appointments.push({
+      childName, day, timeSlot,
+      department:dept,
+      appointmentType,
+      specialist: assignSpecialist(dept),
+      subscription, notes
+    });
   });
-  if(requiredDepts.length === 0){
-    alert("يرجى اختيار قسم واحد على الأقل.");
-    return;
-  }
-  
-  // تحقق من عدد الأطفال في نفس (اليوم + الوقت)
-  if(isSlotFull(day, timeSlot)) {
-    alert("عفواً، هذا الموعد (" + day + " - " + timeSlot + ") ممتلئ بخمسة أطفال.");
-    return;
-  }
-  
-  // لكل قسم مطلوب، يتم إنشاء موعد منفصل مع تعيين أخصائي تلقائي
-  requiredDepts.forEach(dept => {
-    const assignedSpecialist = assignSpecialist(dept, day, timeSlot);
-    const appointment = {
-      childName,
-      day,
-      timeSlot,
-      department: dept,
-      appointmentType, // عادي أو تعويض
-      specialist: assignedSpecialist,
-      subscription,
-      notes
-    };
-    appointments.push(appointment);
-  });
-  
-  // تحديث حقل "اسم الأخصائي" في النموذج ليكون فارغ (أو يمكنك عرضه كنتيجة للتعيين)
-  document.getElementById('specialist').value = "";
-  
   displayAppointments();
-  this.reset();
-  // إلغاء تحديد مربعات الاختيار
-  document.querySelectorAll('.dept-checkbox').forEach(cb => cb.checked = false);
+  this.reset(); document.querySelectorAll('.dept-checkbox').forEach(cb=>cb.checked=false);
 });
 
-/* ======================= عرض المواعيد ======================= */
-function displayAppointments(filteredList = null) {
-  const list = filteredList || appointments;
-  const tbody = document.getElementById('appointmentsBody');
-  tbody.innerHTML = "";
-  list.forEach((appt, index) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
+function displayAppointments(list=appointments){
+  const tbody=document.getElementById('appointmentsBody');
+  tbody.innerHTML="";
+  list.forEach((appt,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
       <td>${appt.childName}</td>
       <td>${appt.day}</td>
       <td>${appt.timeSlot}</td>
@@ -332,60 +266,44 @@ function displayAppointments(filteredList = null) {
       <td>${appt.specialist}</td>
       <td>${appt.subscription}</td>
       <td>${appt.notes}</td>
-      <td><button class="action-btn" onclick="markAbsent(${index})">تعويض/كشف</button></td>
+      <td><button class="action-btn" onclick="markAbsent(${i})">تعويض/كشف</button></td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-/* ======================= التحقق من امتلاء الموعد ======================= */
-function isSlotFull(day, timeSlot) {
-  let count = 0;
-  for (let appt of appointments) {
-    if(appt.day === day && appt.timeSlot === timeSlot) {
-      count++;
-    }
-  }
-  return (count >= MAX_PER_SLOT);
+function isSlotFull(day,timeSlot){
+  return appointments.filter(a=>a.day===day&&a.timeSlot===timeSlot).length>=MAX_PER_SLOT;
 }
 
-/* ======================= تصفية المواعيد حسب الأخصائي ======================= */
-function filterAppointments() {
-  const filterSpec = document.getElementById('filterSpec').value.trim().toLowerCase();
-  const filtered = appointments.filter(appt => 
-    appt.specialist.toLowerCase() === filterSpec
-  );
-  displayAppointments(filtered);
-}
-
-/* عرض جميع المواعيد */
-function showAllAppointments() {
-  displayAppointments();
-}
-
-/* ======================= مسح الحقول في النموذج ======================= */
-function clearForm() {
-  document.getElementById('appointmentForm').reset();
-  document.querySelectorAll('.dept-checkbox').forEach(cb => cb.checked = false);
-}
-
-/* ======================= حفظ واستعادة المواعيد ======================= */
-function saveAppointments() {
-  localStorage.setItem('appointments', JSON.stringify(appointments));
-  alert("تم حفظ المواعيد في المتصفح.");
-}
-
-function loadAppointments() {
-  const stored = localStorage.getItem('appointments');
-  if(stored) {
-    appointments = JSON.parse(stored);
+function markAbsent(idx){
+  if(confirm("تسجيل تعويض/كشف لهذا الموعد؟")){
+    appointments[idx].appointmentType="تعويض";
     displayAppointments();
-    alert("تم استعادة المواعيد.");
-  } else {
-    alert("لا توجد مواعيد محفوظة.");
   }
 }
 
+function filterAppointments(){
+  const f=document.getElementById('filterSpec').value.trim().toLowerCase();
+  displayAppointments(appointments.filter(a=>a.specialist.toLowerCase()===f));
+}
+function showAllAppointments(){ displayAppointments(); }
+function clearForm(){
+  document.getElementById('appointmentForm').reset();
+  document.querySelectorAll('.dept-checkbox').forEach(cb=>cb.checked=false);
+}
+function saveAppointments(){
+  localStorage.setItem('appointments',JSON.stringify(appointments));
+  alert("تم حفظ المواعيد.");
+}
+function loadAppointments(){
+  const s=localStorage.getItem('appointments');
+  if(s){ appointments=JSON.parse(s); displayAppointments(); alert("تم الاستعادة."); }
+  else alert("لا توجد مواعيد محفوظة.");
+}
+</script>
+</body>
+</html>
 /* ======================= إجراء تعويض/كشف عند غياب الطفل ======================= */
 /*
  عند الضغط على زر "تعويض/كشف" في صف موعد، يمكننا:
